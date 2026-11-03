@@ -58,9 +58,11 @@ const SHELF_CSS='<style id="shelf-css">'+
 '.shelf-head .cnt{margin-left:auto;white-space:nowrap;font-size:12.5px;letter-spacing:.06em;color:var(--gold-deep);border:1px solid var(--gold);border-radius:999px;padding:3px 10px}'+
 '.shelf .card h3{font-size:16px}'+
 '.shelf .card.is-new{position:relative}.shelf .card.is-new::after{content:attr(data-new);position:absolute;top:10px;left:10px;background:var(--ink);color:#fff;font-size:11.5px;letter-spacing:.08em;padding:3px 9px;border-radius:999px}'+
-'@media (max-width:640px){.shelf-head{flex-wrap:wrap}.shelf-head .cnt{margin-left:0}'+
-'.shelf .cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px;margin-inline:-16px;padding-inline:16px;scrollbar-width:thin}'+
-'.shelf .cards>.card{flex:0 0 78%;scroll-snap-align:start}.shelf-index{grid-template-columns:1fr 1fr}}'+
+'.shelf-top{display:inline-block;margin-top:10px;font-size:13px;color:var(--gold-deep);text-decoration:none}'+
+'@media (max-width:980px){.shelf .cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:2px 16px 12px;margin-inline:-16px;scrollbar-width:thin}'+
+'.shelf .cards>.card{flex:0 0 44%;scroll-snap-align:start}.shelf-swipe{display:block}}'+
+'.shelf-swipe{display:none;font-size:12.5px;color:var(--muted);margin:-10px 0 10px}'+
+'@media (max-width:640px){.shelf-head{flex-wrap:wrap}.shelf-head .cnt{margin-left:0}.shelf .cards>.card{flex:0 0 80%}.shelf-index{grid-template-columns:1fr 1fr}.shelf-index a{padding:10px}.shelf-index .n{font-size:24px}}'+
 '</style>';
 function slugOf(a){const m=a.match(/href="[^"]*\/([^\/"]+)\/"/);return m?m[1]:'';}
 function shelfify(t,cat,en,extra){
@@ -78,11 +80,11 @@ function shelfify(t,cat,en,extra){
  if(rest.length)shelves.push({t:en?["More articles","Other articles in this category"]:["บทความอื่น ๆ","บทความเพิ่มเติมในหมวดนี้"],items:rest});
  const unit=en?' articles':' บทความ';
  const pad=n=>String(n).padStart(2,'0');
- let idx='<nav class="shelf-index" aria-label="'+(en?'Topics in this category':'หัวข้อในหมวดนี้')+'">';
+ let idx='<nav class="shelf-index" id="shelf-index" aria-label="'+(en?'Topics in this category':'หัวข้อในหมวดนี้')+'">';
  let body='';
  shelves.forEach((sh,k)=>{const id='shelf-'+(k+1);
   idx+='<a href="#'+id+'"><span class="n">'+pad(k+1)+'</span><b>'+sh.t[0]+'</b><em>'+sh.items.length+unit+'</em></a>';
-  body+='<section class="shelf" id="'+id+'" aria-labelledby="'+id+'-h"><header class="shelf-head"><span class="n">'+pad(k+1)+'</span><div><h2 id="'+id+'-h">'+sh.t[0]+'</h2><p>'+sh.t[1]+'</p></div><span class="cnt">'+sh.items.length+unit+'</span></header><div class="cards cards-3">'+sh.items.map(s=>by[s]).join('')+'</div></section>';});
+  body+='<section class="shelf" id="'+id+'" aria-labelledby="'+id+'-h"><header class="shelf-head"><span class="n">'+pad(k+1)+'</span><div><h2 id="'+id+'-h">'+sh.t[0]+'</h2><p>'+sh.t[1]+'</p></div><span class="cnt">'+sh.items.length+unit+'</span></header>'+(sh.items.length>1?'<p class="shelf-swipe">'+(en?'Swipe for more →':'ปัดเพื่อดูเพิ่ม →')+'</p>':'')+'<div class="cards cards-3">'+sh.items.map(s=>by[s]).join('')+'</div><a class="shelf-top" href="#shelf-index">'+(en?'↑ All topics':'↑ ดูหัวข้อทั้งหมด')+'</a></section>';});
  idx+='</nav>';
  let out=t.slice(0,i)+idx+body+t.slice(close);
  const total=order.length;
