@@ -92,6 +92,36 @@
 @media (max-width:640px){.cover-actions .btn{flex:1 1 calc(50% - 8px);white-space:normal}}
 .infog-btn img,.cover img,.buy-card img{-webkit-user-drag:none;user-select:none}
 
+.paths>div{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.paths>div:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(33,29,25,.10)}
+.paths ul{list-style:none;margin:8px 0 0;padding:0}
+.paths li{position:relative;padding-left:26px;margin:7px 0}
+.paths li::before{content:"✓";position:absolute;left:0;top:0;width:18px;height:18px;line-height:18px;text-align:center;font-size:11px;border-radius:50%;background:var(--cream-deep);color:var(--gold-deep);font-weight:700}
+.paths>div.us li::before{background:var(--gold-deep);color:#fff}
+.paths>div.us{position:relative}
+.js-anim .paths>div{opacity:0}
+.js-anim .paths>div:first-child{transform:translateX(-26px)}.js-anim .paths>div:last-child{transform:translateX(26px)}
+.js-anim .paths.in>div{animation:pathIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+.js-anim .paths.in>div:last-child{animation:pathIn .7s cubic-bezier(.2,.7,.2,1) .15s forwards,usGlow 1.8s ease .9s 1}
+.js-anim .paths li{opacity:0;transform:translateY(8px)}
+.js-anim .paths.in li{animation:whoIn .45s ease forwards}
+.js-anim .paths.in li:nth-child(1){animation-delay:.35s}.js-anim .paths.in li:nth-child(2){animation-delay:.45s}.js-anim .paths.in li:nth-child(3){animation-delay:.55s}.js-anim .paths.in li:nth-child(4){animation-delay:.65s}.js-anim .paths.in li:nth-child(5){animation-delay:.75s}
+@keyframes pathIn{to{opacity:1;transform:none}}
+@keyframes usGlow{0%{box-shadow:0 0 0 0 rgba(169,137,91,.45)}60%{box-shadow:0 0 0 10px rgba(169,137,91,0)}100%{box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.js-anim .paths>div,.js-anim .paths li{opacity:1;transform:none;animation:none!important}}
+
+.who div{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.who div::before{content:"";position:absolute;left:0;top:-3px;height:3px;width:0;background:var(--gold-deep);transition:width .5s ease}
+.who div:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(33,29,25,.10);border-color:var(--gold)}
+.who div:hover::before{width:100%}
+.who div b{transition:color .3s}.who div:hover b{color:var(--gold-deep)}
+.js-anim .who div{opacity:0;transform:translateY(18px)}
+.js-anim .who.in div{animation:whoIn .6s cubic-bezier(.2,.7,.2,1) forwards}
+.js-anim .who.in div:nth-child(2){animation-delay:.08s}.js-anim .who.in div:nth-child(3){animation-delay:.16s}
+.js-anim .who.in div:nth-child(4){animation-delay:.24s}.js-anim .who.in div:nth-child(5){animation-delay:.32s}.js-anim .who.in div:nth-child(6){animation-delay:.4s}
+@keyframes whoIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.js-anim .who div{opacity:1;transform:none;animation:none!important}.who div,.who div::before{transition:none}}
+
 .dg-steps li strong{display:block}
 .cmp th:first-child,.cmp td:first-child{font-weight:600;white-space:nowrap}
 .cmp td.us{background:#f6efe2}
@@ -249,5 +279,6 @@ var lb=document.createElement('div');lb.className='agz-lb';lb.setAttribute('role
 lb.innerHTML='<button type="button" aria-label="close">\u00d7</button>';var big=new Image();big.src=b.dataset.full;big.alt=img.alt;lb.appendChild(big);
 lb.addEventListener('click',function(){close(lb);});document.body.appendChild(lb);requestAnimationFrame(function(){lb.classList.add('on');});
 lb.querySelector('button').focus();document.addEventListener('keydown',onKey);});})();</script>
+<script>(function(){if(!('IntersectionObserver' in window))return;document.documentElement.classList.add('js-anim');var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});document.querySelectorAll('.who,.paths').forEach(function(w){io.observe(w)})})();</script>
 <script>document.addEventListener('contextmenu',function(e){if(e.target.tagName==='IMG')e.preventDefault()});document.addEventListener('dragstart',function(e){if(e.target.tagName==='IMG')e.preventDefault()});</script>
 </body></html>
