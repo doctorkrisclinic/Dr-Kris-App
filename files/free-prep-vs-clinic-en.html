@@ -117,6 +117,25 @@
 @media (max-width:640px){.fl-branches{grid-template-columns:1fr;gap:22px}}
 .js-anim .flow .fl-node,.js-anim .flow .fl-arrow,.js-anim .flow .fl-dec,.js-anim .flow .fl-tag,.js-anim .flow .fl-warn{opacity:0;transform:translateY(10px)}
 .js-anim .flow.in .fl-node,.js-anim .flow.in .fl-arrow,.js-anim .flow.in .fl-dec,.js-anim .flow.in .fl-tag,.js-anim .flow.in .fl-warn{animation:whoIn .5s ease forwards;animation-delay:calc(var(--i,0)*.09s)}
+
+.fl-node{transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-left-width .3s;position:relative;overflow:hidden}
+.fl-node:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 22px rgba(33,29,25,.12);border-left-width:6px}
+.fl-node .n{transition:transform .3s}.fl-node:hover .n{transform:rotate(360deg);transition:transform .6s}
+.fl-arrow::before{content:"";position:absolute;left:-3px;top:0;width:8px;height:8px;border-radius:50%;background:inherit;opacity:0;animation:flDot 1.8s ease-in-out infinite}
+@keyframes flDot{0%{top:-4px;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:18px;opacity:0}}
+.fl-dec::after{content:"";position:absolute;inset:22px;transform:rotate(45deg);border-radius:10px;border:2px solid var(--gold);animation:flPulse 2.6s ease-out infinite}
+@keyframes flPulse{0%{opacity:.8;inset:22px}100%{opacity:0;inset:10px}}
+.fl-dec span{animation:flBreath 2.6s ease-in-out infinite}
+@keyframes flBreath{50%{transform:scale(1.06)}}
+.fl-node.final::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);animation:flShine 3.8s ease-in-out infinite}
+@keyframes flShine{0%,55%{left:-60%}100%{left:130%}}
+.fl-warn{animation:none}
+.js-anim .flow.in .fl-warn{animation:whoIn .5s ease forwards,flNudge 3s ease-in-out 2.2s infinite;animation-delay:calc(var(--i,0)*.09s),2.4s}
+@keyframes flNudge{0%,88%,100%{transform:none}92%{transform:translateX(-4px)}96%{transform:translateX(4px)}}
+.js-anim .flow.in .fl-tag{animation:flPop .55s cubic-bezier(.3,1.6,.5,1) forwards;animation-delay:calc(var(--i,0)*.09s)}
+@keyframes flPop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:none}}
+.js-anim .flow.in .fl-node .n{animation:flPop .5s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i,0)*.09s + .2s)}
+@media (prefers-reduced-motion:reduce){.fl-arrow::before,.fl-dec::after,.fl-dec span,.fl-node.final::after{animation:none!important;display:none}}
 @media (prefers-reduced-motion:reduce){.js-anim .flow *{opacity:1!important;transform:none!important;animation:none!important}}
 
 .tbl thead th{text-align:center;vertical-align:middle}
