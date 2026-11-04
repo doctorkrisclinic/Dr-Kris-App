@@ -152,7 +152,7 @@ m=p.match(/^\/(en\/)?knowledge\/(sti-hiv|sexual-behavior)\/([a-z0-9-]+)\/$/);
 if(m&&(PREP_ARTICLES.includes(m[3])||m[3]==='sex-worker-health')){const en=!!m[1];const r=await env.UP.fetch(req);if(!isHtml(r))return r;let first=true,boxed=false;
  return new HTMLRewriter().on('section.tldr',{element(e){if(!boxed){e.after(en?PBOX_EN:PBOX_TH,{html:true});boxed=true}}}).on('section.related .cards',{element(e){if(first){e.prepend(en?C.freeEN+C.prepEN:C.freeTH+C.prepTH,{html:true});first=false}}}).transform(r);}
 // sitemap
-if(p==='/knowledge/sitemap.xml'){const r=await env.UP.fetch(req);if(r.status!==200)return r;let t=await r.text();const add=SMU.filter(x=>!t.includes('<loc>https://doctorkrisclinic.com'+x+'</loc>')).map(smu).join('');t=t.replace('</urlset>',add+'</urlset>');return htmlResp(t,r);}
+if(p==='/knowledge/sitemap.xml'||p==='/en/knowledge/sitemap.xml'){const r=await env.UP.fetch(req);if(r.status!==200)return r;let t=await r.text();const add=SMU.filter(x=>!t.includes('<loc>https://doctorkrisclinic.com'+x+'</loc>')).map(smu).join('');t=t.replace('</urlset>',add+'</urlset>');return htmlResp(t,r);}
 // service page
 if(p==='/hiv-sti-prevention/'){const r=await env.SEO.fetch(req);if(!isHtml(r))return r;let done=false;
  return new HTMLRewriter().on('article.wrap h1',{element(e){if(!done){e.after('<div style="margin:14px 0 18px">'+PREP_LINK+'</div>',{html:true});done=true}}}).transform(r);}
