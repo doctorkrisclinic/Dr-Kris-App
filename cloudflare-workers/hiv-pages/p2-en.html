@@ -346,7 +346,7 @@ R.querySelector('.rk-see').addEventListener('click',function(){
  res.querySelector('.rk-lv').textContent=T.lv[r.lvl];
  res.querySelector('h4').textContent=r.title;res.querySelector('.rk-adv').textContent=r.adv;
  var ex=res.querySelector('.rk-ex');ex.innerHTML='';r.extra.forEach(function(x){var d=document.createElement('div');d.className='rk-box';d.textContent=x;ex.appendChild(d);});
- var ul=res.querySelector('ul');ul.innerHTML='';r.notes.forEach(function(x){var li=document.createElement('li');li.textContent=x;ul.appendChild(li);});ul.style.display=r.notes.length?'':'none';
+ var ul=res.querySelector('ul');ul.innerHTML='';r.notes.forEach(function(x){var li=document.createElement('li');li.textContent=x;if(x===T.N.far&&location.pathname.indexOf('pep-surat-thani')<0){var a=document.createElement('a');a.href=(document.documentElement.lang=='en'?'/en':'')+'/knowledge/sti-hiv/pep-surat-thani/';a.textContent='How to get PEP delivered in Mueang Surat Thani';a.style.cssText='display:table;margin-top:.45rem;background:#b3261e;color:#fff;border-radius:999px;padding:.35rem .95rem;font-weight:600;text-decoration:none;font-size:.92rem';li.appendChild(a);}ul.appendChild(li);});ul.style.display=r.notes.length?'':'none';
  var txt=message(r);res.dataset.txt=txt;
  res.querySelector('.rk-l').href='https://line.me/R/oaMessage/%40dr.krisclinic/?'+encodeURIComponent(txt);
  res.querySelector('.rk-m').href='mailto:admin@doctorkrisclinic.com?subject='+encodeURIComponent(T.sub)+'&body='+encodeURIComponent(txt);
